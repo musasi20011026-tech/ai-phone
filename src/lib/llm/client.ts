@@ -133,8 +133,10 @@ ${extraSection}
 
 【応答ルール】
 - ${toneGuide}
-- 1回の応答は1〜3文以内で簡潔に。電話なので長文は避ける。
-- 答えられない質問: 「確認して折り返しお電話いたします」と伝え、連絡先を伺う。
+- 1回の応答は必ず1〜2文（50文字以内）で返す。長い応答は絶対に禁止。電話なので短く。
+- 1つの質問に対して1つだけ回答する。複数の情報を一度に伝えない。
+- 改行は使わない。1行で返す。
+- 答えられない質問: 「折り返しお電話いたします」と伝え、連絡先を伺う。
 - 通話の最後は「お電話ありがとうございました。」で締める。
 
 【予約受付フロー（最重要）】
@@ -269,8 +271,8 @@ ${config.availabilityContext ? `\n【空席状況】\n${config.availabilityConte
 
 【応答ルール】
 - ${toneGuide}
-- 1〜3文で簡潔に。
-- 予約: 日時・人数・名前・電話番号を確認。
+- 必ず1〜2文（50文字以内）で返す。長文禁止。改行禁止。
+- 予約: 日時・人数・名前・電話番号を1つずつ確認。
 - 答えられない質問: 「折り返しお電話いたします」と伝え連絡先を伺う。
 - 満席時は代替時間を提案。
 
@@ -308,7 +310,7 @@ export async function generateResponse(
 
   const response = await getAnthropicClient().messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: config.plan === 'lite' ? 150 : 200,
+    max_tokens: config.plan === 'lite' ? 80 : 100,
     temperature: 0.5,
     // Prompt Caching: システムプロンプトをキャッシュ（同一通話内の複数ターンで再利用）
     system: [
@@ -350,7 +352,7 @@ export async function* streamResponse(
 
   const stream = getAnthropicClient().messages.stream({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: config.plan === 'lite' ? 150 : 200,
+    max_tokens: config.plan === 'lite' ? 80 : 100,
     temperature: 0.5,
     system: [
       {

@@ -474,7 +474,7 @@ function buildTwiml(
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say language="${langConfig.language}" voice="${langConfig.voice}">${escapeXml(responseText)}</Say>
+  <Say language="${langConfig.language}" voice="${langConfig.voice}">${escapeXml(responseText.replace(/\n+/g, ' ').trim())}</Say>
   <Gather input="speech"
          language="${langConfig.gatherLang}"
          speechTimeout="3"
